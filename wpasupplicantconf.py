@@ -35,6 +35,9 @@ class WpaSupplicantConf:
         self.reload()
 
     def reload(self):
+        self._fields = OrderedDict()
+        self._networks = OrderedDict()
+        self._comments = list()
         network = None
         for linenumber, line in enumerate(self._lines):
             line = line.strip()
