@@ -37,6 +37,7 @@ class WpaSupplicantConf:
             line = line.strip()
             if not line or line.startswith('#'):
                 self._comments.append((linenumber, line))
+                continue
 
             if line == "}":
                 if network is None:
