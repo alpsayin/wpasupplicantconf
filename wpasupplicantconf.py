@@ -25,15 +25,18 @@ class WpaSupplicantConf:
         self._fields = OrderedDict()
         self._networks = OrderedDict()
         self._comments = list()
+        self._lines = lines
         if filepath is not None:
             with open(filepath, 'r') as rfid:
-                lines = rfid.readlines()
+                self._lines = rfid.readlines()
             self.filepath = Path(filepath)
         else:
             self.filepath = None
+        self.reload()
 
+    def reload(self):
         network = None
-        for linenumber, line in enumerate(lines):
+        for linenumber, line in enumerate(self._lines):
             line = line.strip()
             if not line or line.startswith('#'):
                 self._comments.append((linenumber, line))
