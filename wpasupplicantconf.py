@@ -1,4 +1,10 @@
 from collections import OrderedDict
+from pathlib import Path
+from typing import Union
+from io import IOBase
+
+
+DEFAULT_WPA_SUPPLICANT_FILEPATH = Path('/etc/wpa_supplicant/wpa_supplicant.conf')
 
 
 class ParseError(ValueError):
@@ -15,9 +21,15 @@ class WpaSupplicantConf:
     round-tripped through this class.
     """
 
-    def __init__(self, lines):
+    def __init__(self, lines=None, filepath=None):
         self._fields = OrderedDict()
         self._networks = OrderedDict()
+        if filepath is not None:
+            with open(filepath, 'r') as rfid:
+                lines = rfid.readlines()
+            self.filepath = Path(filepath)
+        else:
+            self.filepath = None
 
         network = None
         for line in lines:
@@ -67,16 +79,42 @@ class WpaSupplicantConf:
     def remove_network(self, ssid):
         self._networks.pop(ssid, None)
 
-    def write(self, f):
+    def write(self, fid: Union[IOBase, Path, str] = None):
+        print(f'fid={fid}')
+        if fid is None and self.filepath is not None:
+            fid = open(self.filepath, 'w+')
+        elif fid is None:
+            raise TypeError(f'write() missing 1 required positional argument: fid')
+        elif isinstance(fid, str):
+            fid = open(Path(fid), 'w+')
+
         for name, value in self._fields.items():
-            f.write("{}={}\n".format(name, value))
+            fid.write("{}={}\n".format(name, value))
 
         for ssid, info in self._networks.items():
-            f.write("\nnetwork={\n")
-            f.write('    ssid="{}"\n'.format(ssid))
+            fid.write("\nnetwork={\n")
+            fid.write('    ssid="{}"\n'.format(ssid))
             for name, value in info.items():
-                f.write("    {}={}\n".format(name, value))
-            f.write("}\n")
+                fid.write("    {}={}\n".format(name, value))
+            fid.write("}\n")
+
+        try:
+            fid.close()
+        except Exception as e:
+            print(f'Couldnt close the output file {fid}: {e}')
+            pass
+
+    @classmethod
+    def default(cls):
+        return WpaSupplicantConf(filepath=DEFAULT_WPA_SUPPLICANT_FILEPATH)
+
+    @classmethod
+    def from_file(cls, rfilepath: Path):
+        return WpaSupplicantConf(filepath=rfilepath)
+
+    @classmethod
+    def from_lines(cls, lines):
+        return WpaSupplicantConf(lines=lines)
 
 
 def dequote(v):
