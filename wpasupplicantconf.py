@@ -24,6 +24,7 @@ class WpaSupplicantConf:
     def __init__(self, lines=None, filepath=None):
         self._fields = OrderedDict()
         self._networks = OrderedDict()
+        self._comments = list()
         if filepath is not None:
             with open(filepath, 'r') as rfid:
                 lines = rfid.readlines()
@@ -32,10 +33,10 @@ class WpaSupplicantConf:
             self.filepath = None
 
         network = None
-        for line in lines:
+        for linenumber, line in enumerate(lines):
             line = line.strip()
             if not line or line.startswith('#'):
-                continue
+                self._comments.append((linenumber, line))
 
             if line == "}":
                 if network is None:
