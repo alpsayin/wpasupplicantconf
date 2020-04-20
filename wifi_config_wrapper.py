@@ -42,7 +42,7 @@ class WifiConfigWrapper(object):
     def put(self, ssid, key=None, *args, **kwargs):
         try:
             if key:
-                self.wconf.add_network(ssid, psk=key, key_mgmt='WPA-PSK')
+                self.wconf.add_network(ssid, psk=f'"{key}"', key_mgmt='WPA-PSK')
             else:
                 self.wconf.add_network(ssid)
             self.wconf.write()
