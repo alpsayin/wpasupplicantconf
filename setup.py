@@ -9,7 +9,7 @@ setup(
     url='https://github.com/alpsayin/wpasupplicantconf',
     py_modules=['wpasupplicantconf'],
     classifiers=[
-        'Development Status :: 5 - Beta',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
     ],
