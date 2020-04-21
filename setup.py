@@ -7,7 +7,7 @@ setup(
     author='Menno Finlay-Smits, Alp Sayin',
     author_email='menno@cacophony.org.nz',
     url='https://github.com/alpsayin/wpasupplicantconf',
-    py_modules=['wpasupplicantconf'],
+    py_modules=['wpasupplicantconf', 'wifi_config_wrapper'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
