@@ -36,7 +36,7 @@ To avoid that, you can use the reload function.
 The wrapper above always reloads before any operation. More IO at the expense of *almost* atomic access to wpa_supplicant.
 Example code below:
 ```python
-wifi = WpaSupplicantConf.default()  # same as WpaSupplicantConf.default('/etc/wpa_supplicant/wpa_supplicant.conf')
+wifi = WpaSupplicantConf.default()  # same as WpaSupplicantConf.from_file('/etc/wpa_supplicant/wpa_supplicant.conf')
 initial_fields = wifi.fields()
 list_of_networks = wifi.networks()
 wifi.add_network(self, 'mywifiname', psk='"mywifipassword"', key_mgmt='WPA-PSK')
