@@ -1,7 +1,7 @@
 # wpasupplicantconf
 Python library for parsing, manipulation and generation of wpa_supplicant.conf files
 
-Like me, you may find yourself a neat module to edit wpa_supplicant.conf file.
+Like me, you may wanna find yourself a neat module to edit wpa_supplicant.conf file.
 Because like me you may go through below steps:
 1. I can't be the only one
 2. Yes, it's a simple-enough text parsing and editing.
