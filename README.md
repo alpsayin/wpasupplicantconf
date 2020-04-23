@@ -12,7 +12,7 @@ Because like me you may go through below steps:
 This is the extra simple module where things can get wrong easier. But provides a much simpler interface.
 Example code below:
 ```python
-wifi = WifiConfigWrapper()  # or you can give it a pathlib.Path
+wifi = WifiConfigWrapper()  # or you can give it a pathlib.Path or str
 wifi_list = wifi.list()
 
 # Returns the list with wifi added or updated depending on the situation
@@ -47,9 +47,9 @@ Example code below:
 ```python
 lines = open('/etc/wpa_supplicant/wpa_supplicant.conf', 'r').readlines()
 wifi = WpaSupplicantConf.from_lines(lines)  # uses /etc/wpa_supplicant/wpa_supplicant.conf
-initial_fields = wifi.fields()
 list_of_networks = wifi.networks()
 wifi.add_network(self, 'mywifiname', psk='"mywifipassword"', key_mgmt='WPA-PSK')
-wifi.remove_network(self, 'mywifiname')
-wifi.write(open('/etc/wpa_supplicant/wpa_supplicant.conf','w')):
+wifi.reload()  # mywifiname wifi is lost now
+wifi.remove_network(self, 'anotherwifi')
+wifi.write(open('/etc/wpa_supplicant/wpa_supplicant.conf','w'))  # this can take a str, an IOBase or a pathlib.Path
 ```
