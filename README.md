@@ -33,7 +33,7 @@ To avoid that, you can use the reload function.
  - If you do reload without writing first, you'll lose any changes. 
  - And if you do write before reloading, you'll lose the external changes. 
 
-The wrapper above always reloads before any operation. More IO at the expense of *almost* atomic access to wpa_supplicant.
+The wrapper above always reloads before any operation. *almost* atomic access to wpa_supplicant at the expense of more IO.
 Example code below:
 ```python
 wifi = WpaSupplicantConf.default()  # same as WpaSupplicantConf.from_file('/etc/wpa_supplicant/wpa_supplicant.conf')
@@ -53,3 +53,5 @@ wifi.reload()  # mywifiname wifi is lost now
 wifi.remove_network(self, 'anotherwifi')
 wifi.write(open('/etc/wpa_supplicant/wpa_supplicant.conf','w'))  # this can take a str, an IOBase or a pathlib.Path
 ```
+## Contributing
+Fork it, mod it, send a PR.
